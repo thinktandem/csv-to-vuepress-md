@@ -2,9 +2,6 @@
     "doctrine/inflector": {
         "version": "v1.3.0"
     },
-    "netcarver/textile": {
-        "version": "v3.7.3"
-    },
     "nikic/php-parser": {
         "version": "v4.2.4"
     },

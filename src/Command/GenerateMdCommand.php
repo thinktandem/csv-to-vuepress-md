@@ -56,11 +56,6 @@ class GenerateMdCommand extends Command {
   protected $filePath;
 
   /**
-   * @var bool
-   */
-  protected $textileFormatted = FALSE;
-
-  /**
    * @inheritdoc
    */
   protected function configure() {
@@ -79,10 +74,6 @@ class GenerateMdCommand extends Command {
     // Ask deliminator question
     $dquestion = new Question('CSV delimiter (defaults to ,): ', ',');
     $delim = $helper->ask($input, $output, $dquestion);
-
-    // Ask the textile question.
-    $tquestion = new ConfirmationQuestion('Process body field from textile format (y/n): ', FALSE);
-    $this->textileFormatted = $helper->ask($input, $output, $tquestion);
 
     $io = new SymfonyStyle($input, $output);
     if ($filename = $input->getArgument('filename')) {
@@ -215,12 +206,6 @@ class GenerateMdCommand extends Command {
 
     // Convert HTML to Markdown.
     $body = (new ConverterExtra)->parseString($body);
-
-    // If textile formatted.
-    if ($this->textileFormatted) {
-      $body = (new Parser())->parse($body);
-      $body = str_replace("%5Cn", '', $body);
-    }
 
     // Now write the body content.
     $file = fopen($this->filePath, 'ab');

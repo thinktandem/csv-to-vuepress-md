@@ -19,10 +19,9 @@ Your CSV **MUST** have a title, url, & body columns and header in it for this to
 
 ### Questions
 
-Currently, we ask 2 questions
+Currently, we ask 1 question
 
 1. What delimiter do you want to use (defaults to ,)
-2. Do you want to process textile formatted body field text (defaults to FALSE)
 
 ### YAML Frontmatter
 
@@ -31,8 +30,6 @@ All columns that are not title, url, & body will be generated as [YAML Frontmatt
 ### Content
 
 Most HTML is converted to Markdown & Markdown Extra via [Markdownify](https://github.com/Elephant418/Markdownify).
-
-Textile text (if chosen) is converted to HTML via [PHP-Textile](https://github.com/textile/php-textile).
 
 ### Output
 
