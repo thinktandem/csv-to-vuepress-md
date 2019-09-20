@@ -183,7 +183,7 @@ class GenerateMdCommand extends Command {
    */
   protected function generateFrontMatter() {
     // Set our title then banish it.
-    $title = str_replace(':', '-', $this->currentRow[$this->titleKey]);
+    $title = '"' . str_replace('"', '', $this->currentRow[$this->titleKey]) . '"';
     unset($this->currentRow[$this->titleKey]);
 
     $file = fopen($this->filePath, 'wb');
