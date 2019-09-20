@@ -213,6 +213,7 @@ class GenerateMdCommand extends Command {
     // If textile formatted.
     if ($this->textileFormatted) {
       $body = (new Parser())->parse($body);
+      $body = str_replace("%5Cn", '', $body);
     }
 
     // Convert HTML to Markdown.
