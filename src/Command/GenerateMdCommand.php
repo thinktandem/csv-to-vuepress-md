@@ -183,7 +183,7 @@ class GenerateMdCommand extends Command {
    */
   protected function generateFrontMatter() {
     // Set our title then banish it.
-    $title = $this->currentRow[$this->titleKey];
+    $title = str_replace(':', '-', $this->currentRow[$this->titleKey]);
     unset($this->currentRow[$this->titleKey]);
 
     $file = fopen($this->filePath, 'wb');
@@ -215,10 +215,16 @@ class GenerateMdCommand extends Command {
       $body = (new Parser())->parse($body);
     }
 
+    // Convert HTML to Markdown.
+    $body = (new ConverterExtra)->parseString($body);
+
+    // Change newline to line breaks.
+    $body = str_replace('\n','<br>', $body);
+
     // Now write the body content.
     $file = fopen($this->filePath, 'ab');
     fwrite($file, "\n");
-    fwrite($file, (new ConverterExtra)->parseString($body));
+    fwrite($file, $body);
     fclose($file);
   }
 }
