@@ -56,9 +56,9 @@ class GenerateMdCommand extends Command {
   protected $filePath;
 
   /**
-   * @var bool
+   * @var string
    */
-  protected $textileFormatted = FALSE;
+  protected $textileKey;
 
   /**
    * @inheritdoc
@@ -80,9 +80,6 @@ class GenerateMdCommand extends Command {
     $dquestion = new Question('CSV delimiter (defaults to ,): ', ',');
     $delim = $helper->ask($input, $output, $dquestion);
 
-    // Ask the textile question.
-    $tquestion = new ConfirmationQuestion('Process body field from textile format (y/n): ', FALSE);
-    $this->textileFormatted = $helper->ask($input, $output, $tquestion);
 
     $io = new SymfonyStyle($input, $output);
     if ($filename = $input->getArgument('filename')) {
@@ -137,6 +134,7 @@ class GenerateMdCommand extends Command {
     $this->bodyKey = array_search('body', $this->header);
     $this->urlKey = array_search('url', $this->header);
     $this->titleKey = array_search('title', $this->header);
+    $this->textileKey = array_search('textile', $this->header);
 
     // Engage.
     foreach ($this->rows as $row) {
@@ -192,7 +190,7 @@ class GenerateMdCommand extends Command {
 
     // Write all other keys.
     foreach ($this->currentRow as $key => $value) {
-      if ($key === $this->bodyKey) {
+      if ($key === $this->bodyKey || $key === $this->textileKey) {
         continue;
       }
 
@@ -215,9 +213,9 @@ class GenerateMdCommand extends Command {
 
     // Convert HTML to Markdown.
     $body = (new ConverterExtra)->parseString($body);
-
+    
     // If textile formatted.
-    if ($this->textileFormatted) {
+    if ($this->currentRow[$this->textileKey] === 'Y') {
       $body = (new Parser())->parse($body);
       $body = str_replace("%5Cn", '', $body);
     }
