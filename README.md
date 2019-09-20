@@ -24,17 +24,15 @@ Currently, we ask 2 questions
 1. What delimiter do you want to use (defaults to ,)
 2. Do you want to process textile formatted body field text (defaults to FALSE)
 
-If you do process textile text, it will convert it to HTML first then to markdown.
-
 ### YAML Frontmatter
 
 All columns that are not title, url, & body will be generated as [YAML Frontmatter](https://vuepress.vuejs.org/guide/frontmatter.html#predefined-variables).
 
 ### Content
 
-Textile text (if chosen) is converted to HTML via [PHP-Textile](https://github.com/textile/php-textile).
-
 Most HTML is converted to Markdown & Markdown Extra via [Markdownify](https://github.com/Elephant418/Markdownify).
+
+Textile text (if chosen) is converted to HTML via [PHP-Textile](https://github.com/textile/php-textile).
 
 ### Output
 
