@@ -61,6 +61,11 @@ class GenerateMdCommand extends Command {
   protected $createHeader = TRUE;
 
   /**
+   * @var string
+   */
+  protected $textileKey;
+
+  /**
    * @inheritdoc
    */
   protected function configure() {
@@ -137,6 +142,7 @@ class GenerateMdCommand extends Command {
     $this->bodyKey = array_search('body', $this->header);
     $this->urlKey = array_search('url', $this->header);
     $this->titleKey = array_search('title', $this->header);
+    $this->textileKey = array_search('textile', $this->header);
 
     // Engage.
     foreach ($this->rows as $row) {
@@ -192,7 +198,7 @@ class GenerateMdCommand extends Command {
 
     // Write all other keys.
     foreach ($this->currentRow as $key => $value) {
-      if ($key === $this->bodyKey) {
+      if ($key === $this->bodyKey || $key === $this->textileKey) {
         continue;
       }
 
@@ -223,6 +229,12 @@ class GenerateMdCommand extends Command {
 
     // Convert HTML to Markdown.
     $body = (new ConverterExtra)->parseString($body);
+
+    // If textile formatted.
+    if ($this->currentRow[$this->textileKey] === 'Y') {
+      $body = (new Parser())->parse($body);
+      $body = str_replace("%5Cn", '', $body);
+    }
 
     // Now write the body content.
     $file = fopen($this->filePath, 'ab');

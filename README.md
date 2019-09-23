@@ -2,6 +2,8 @@
 
 A Symfony Console Command that create a command to generate VuePress Markdown files from CSVs.
 
+__The is a special branch that processes textile formatted content as well.  It was needed for a one off project.  Your CSV must contain a textile column marked with Y or N.__
+
 ## To Use
 
 ```markdown
