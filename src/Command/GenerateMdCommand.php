@@ -222,7 +222,9 @@ class GenerateMdCommand extends Command {
     $body = str_replace('\n','<br>', $body);
 
     // Convert HTML to Markdown.
-    $body = (new ConverterExtra)->parseString($body);
+    $converter = new ConverterExtra();
+    $converter->parseString(FALSE);
+    $body = $converter->parseString($body);
 
     // Now write the body content.
     $file = fopen($this->filePath, 'ab');
