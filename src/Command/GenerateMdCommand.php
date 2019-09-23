@@ -223,7 +223,7 @@ class GenerateMdCommand extends Command {
 
     // Convert HTML to Markdown.
     $converter = new ConverterExtra();
-    $converter->parseString(FALSE);
+    $converter->setKeepHTML(FALSE);
     $body = $converter->parseString($body);
 
     // Now write the body content.
