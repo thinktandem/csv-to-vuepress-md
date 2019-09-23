@@ -56,6 +56,11 @@ class GenerateMdCommand extends Command {
   protected $filePath;
 
   /**
+   * @var bool
+   */
+  protected $createHeader = TRUE;
+
+  /**
    * @inheritdoc
    */
   protected function configure() {
@@ -74,6 +79,10 @@ class GenerateMdCommand extends Command {
     // Ask deliminator question
     $dquestion = new Question('CSV delimiter (defaults to ,): ', ',');
     $delim = $helper->ask($input, $output, $dquestion);
+
+    // Ask Header Question
+    $hquestion = new ConfirmationQuestion('Create a H1 Header on each page from the title column (y/n): ', TRUE);
+    $this->createHeader = $helper->ask($input, $output, $hquestion);
 
     $io = new SymfonyStyle($input, $output);
     if ($filename = $input->getArgument('filename')) {
@@ -192,6 +201,14 @@ class GenerateMdCommand extends Command {
     }
 
     fwrite($file, "---\n");
+    fwrite($file, "\n");
+
+    // Add header if asked.
+    if ($this->createHeader) {
+      fwrite($file, "# " . str_replace('"', '', $title));
+      fwrite($file, "\n");
+    }
+
     fclose($file);
   }
 

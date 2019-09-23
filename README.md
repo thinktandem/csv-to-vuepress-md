@@ -19,9 +19,10 @@ Your CSV **MUST** have a title, url, & body columns and header in it for this to
 
 ### Questions
 
-Currently, we ask 1 question
+Currently, we ask 2 questions
 
 1. What delimiter do you want to use (defaults to ,)
+2. Create a H1 header on each piece of content from the title column (defaults to yes)
 
 ### YAML Frontmatter
 
