@@ -157,15 +157,8 @@ class GenerateMdCommand extends Command {
    * Creates the directories and files.
    */
   protected function createDirectoryStructureAndFile() {
-    // Munge on our path.
-    $path = explode('/', $this->currentRow[$this->urlKey]);
-    $output = './output/';
-
-    // Generate the file name.
-    $file = (count($path) > 1) ? array_pop($path) : 'README';
-
-    // Set the dir path.
-    $output .= implode('/', $path);
+    // We set the path to be all folder so urls don't have html on them.
+    $output = './output/' . $this->currentRow[$this->urlKey];
 
     // Create the directories as need be.
     if (!is_dir($output)){
@@ -173,7 +166,7 @@ class GenerateMdCommand extends Command {
     }
 
     // Now create our file.
-    $this->filePath = $output . '/' . $file . '.md';
+    $this->filePath = $output . '/README.md';
     if (!file_exists($this->filePath)) {
       $file = fopen($this->filePath, 'wb');
       fwrite($file, '');
