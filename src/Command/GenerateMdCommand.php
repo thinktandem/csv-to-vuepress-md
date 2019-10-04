@@ -220,16 +220,16 @@ class GenerateMdCommand extends Command {
     // Change newline to line breaks.
     $body = str_replace('\n','<br>', $body);
 
-    // Convert HTML to Markdown.
-    $converter = new ConverterExtra();
-    $converter->setKeepHTML(FALSE);
-    $body = $converter->parseString($body);
-
     // If textile formatted.
     if ($this->currentRow[$this->textileKey] === 'Y') {
       $body = (new Parser())->parse($body);
       $body = str_replace("%5Cn", '', $body);
     }
+
+    // Convert HTML to Markdown.
+    $converter = new ConverterExtra();
+    $converter->setKeepHTML(FALSE);
+    $body = $converter->parseString($body);
 
     // Now write the body content.
     $file = fopen($this->filePath, 'ab');
